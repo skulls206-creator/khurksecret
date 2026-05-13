@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khurk Secret — Shamir's Secret Sharing</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Background pattern overlay -->
+  <div class="bg-grid"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1 class="app-title">
+        <span class="title-icon">&#9654;</span> Khurk Secret
+      </h1>
+      <p class="app-subtitle">Shamir's Secret Sharing &mdash; split secrets into shares, reconstruct with a threshold</p>
+    </header>
+
+    <!-- Info Banner -->
+    <details class="info-banner">
+      <summary>What is Shamir's Secret Sharing?</summary>
+      <p>
+        Shamir's Secret Sharing (SSS) splits a secret into <strong>N shares</strong>, where any
+        <strong>K of those shares</strong> (the threshold) can reconstruct the original secret.
+        Fewer than K shares reveal nothing about the secret. This implementation runs entirely in
+        your browser — no data is ever sent to a server.
+      </p>
+    </details>
+
+    <!-- Security Notice -->
+    <div class="security-notice" role="alert">
+      <strong>&#9888; Security:</strong> Distribute shares to different people. Never store all
+      shares together. This is a browser-based demo — for real secrets, use an audited library
+      or hardware security module.
+    </div>
+
+    <!-- Main Two-Panel Layout -->
+    <main class="main-panels">
+      <!-- Split Panel -->
+      <section class="panel split-panel" aria-labelledby="split-heading">
+        <h2 id="split-heading" class="panel-title">&#128273; Split Secret</h2>
+        <p class="panel-desc">Divide your secret into N shares. K shares will be needed to recover it.</p>
+
+        <div class="form-group">
+          <label for="secret-input">Secret Text</label>
+          <textarea id="secret-input" placeholder="Enter the secret you want to split..." rows="4" aria-required="true"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group form-group-half">
+            <label for="n-shares">Total Shares (N)</label>
+            <input type="number" id="n-shares" min="2" max="255" value="5" aria-describedby="n-help">
+            <small id="n-help">Total number of shares to create (2&ndash;255)</small>
+          </div>
+          <div class="form-group form-group-half">
+            <label for="k-threshold">Threshold (K)</label>
+            <input type="number" id="k-threshold" min="2" max="255" value="3" aria-describedby="k-help">
+            <small id="k-help">Shares needed to reconstruct the secret (2&ndash;N)</small>
+          </div>
+        </div>
+
+        <button id="split-btn" class="btn btn-primary">Split Secret</button>
+
+        <div id="split-results" class="results-area" hidden>
+          <h3>Generated Shares</h3>
+          <div id="shares-list" class="shares-list"></div>
+          <button id="download-shares-btn" class="btn btn-secondary">Download All Shares</button>
+        </div>
+
+        <div id="split-error" class="error-msg" hidden></div>
+      </section>
+
+      <!-- Reconstruct Panel -->
+      <section class="panel reconstruct-panel" aria-labelledby="reconstruct-heading">
+        <h2 id="reconstruct-heading" class="panel-title">&#128274; Reconstruct Secret</h2>
+        <p class="panel-desc">Enter K or more shares to recover the original secret.</p>
+
+        <div class="form-group">
+          <label for="share-count">Number of Shares to Enter</label>
+          <input type="number" id="share-count" min="2" max="255" value="3" aria-describedby="share-count-help">
+          <small id="share-count-help">How many share strings you have (must be &ge; threshold)</small>
+        </div>
+
+        <div id="share-inputs-container" class="share-inputs">
+          <!-- Dynamic share inputs appear here -->
+        </div>
+
+        <button id="reconstruct-btn" class="btn btn-primary">Reconstruct Secret</button>
+
+        <div id="reconstruct-results" class="results-area" hidden>
+          <h3>Recovered Secret</h3>
+          <textarea id="recovered-secret" class="result-textarea" rows="4" readonly></textarea>
+          <button id="copy-recovered-btn" class="btn btn-copy" data-target="recovered-secret">Copy to Clipboard</button>
+        </div>
+
+        <div id="reconstruct-error" class="error-msg" hidden></div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Runs entirely in your browser. No data leaves your device.</p>
+    </footer>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
