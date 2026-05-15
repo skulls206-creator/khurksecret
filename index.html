@@ -5,9 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Khurk Secret — Shamir's Secret Sharing</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
   <!-- Background pattern overlay -->
+  <noscript>
+    <div class="nojs-warning" role="alert">
+      <strong>JavaScript Required:</strong> This application requires JavaScript to split and reconstruct secrets. Please enable JavaScript in your browser.
+    </div>
+  </noscript>
+
   <div class="bg-grid"></div>
 
   <div class="container">
@@ -82,6 +89,12 @@
           <label for="share-count">Number of Shares to Enter</label>
           <input type="number" id="share-count" min="2" max="255" value="3" aria-describedby="share-count-help">
           <small id="share-count-help">How many share strings you have (must be &ge; threshold)</small>
+        </div>
+
+        <div class="form-group">
+          <label for="reconstruct-k-threshold">Threshold (K)</label>
+          <input type="number" id="reconstruct-k-threshold" min="2" max="255" value="3" aria-describedby="reconstruct-k-help">
+          <small id="reconstruct-k-help">Shares needed to reconstruct the secret (2&ndash;N)</small>
         </div>
 
         <div id="share-inputs-container" class="share-inputs">

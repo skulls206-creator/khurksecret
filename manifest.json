@@ -1,0 +1,10 @@
+{
+  "name": "Khurk Secret",
+  "short_name": "KhurkSecret",
+  "description": "Shamir's Secret Sharing — split secrets into shares, reconstruct with threshold",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#07070e",
+  "theme_color": "#00d4aa",
+  "orientation": "any"
+}
